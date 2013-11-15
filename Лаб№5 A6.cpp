@@ -64,7 +64,8 @@ void main()
 	{
 		for (int i = index; i < N; i++) // Начинаем цикл с 1'го эл-та. Находим 2'ой отриц. эл-т.
 		{
-			if (mas[i] < 0) {
+			if (mas[i] < 0)
+			{
 				secondNegative = mas[i];
 				break;
 			}
