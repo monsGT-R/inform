@@ -5,14 +5,16 @@ using namespace std;
 void main()
 {
 	setlocale(LC_ALL, "Russian");
-	const int length = 3; // Размерность
+	const int length = 5; // Размерность
 	int	matr[length][length];
 	srand(unsigned(time(0)));
 
+	
 	//---[Random Ввод и вывод матрицы]-------------
 	for (int i = 0; i < length; i++) {
 		for (int j = 0; j < length; j++) {
-			matr[i][j] = rand() % 10;
+			//matr[i][j] = rand() % 10;
+			cin >> matr[i][j];
 			cout << matr[i][j] << " ";
 		}
 		cout << endl;
@@ -20,30 +22,27 @@ void main()
 	//---------------------------------------------
 
 	//---[Вывод седловых индексов матрицы]---------
-	bool flagMin = true, flagMax = true;
-	int min, max, minJ, maxJ, minI, maxI;
-	cout << "Седловые точки: ";
+	bool min, max;
+	cout << "Седловые индексы точек: ";
 	for (int i = 0; i < length; i++) {
 		for (int j = 0; j < length; j++) {
 			// Ищем в каждой строке минимальную и максимальную ячейку и сохраняем индексы.
-			if (j == 0 || matr[i][j] < min) {
-				min = matr[i][j];
-				minJ = j;
-				minI = i;
+			min = max = true;
+			for (int j1 = 0; j1 < length; j1++) {
+				if (matr[i][j1] < matr[i][j]) min = false;
+				if (matr[i][j1] > matr[i][j]) max = false;
 			}
-			if (j == 0 || matr[i][j] > max) {
-				max = matr[i][j];
-				maxJ = j;
-				maxI = i;
+			if (min) {
+				max = true;
+				for (int i1 = 0; i1 < length; i1++)
+					if (matr[i1][j] > matr[i][j]) max = false;
 			}
+			if (max) {
+				min = true;
+				for (int i1 = 0; i1 < length; i1++)
+				if (matr[i1][j] < matr[i][j]) min = false;
+			}
+			if (min && max) cout << "(" << i << ", " << j << ") ";
 		}
-		for (int k = 0; k < length; k++) {
-			// Мин. элемент в строке проверяем, является ли он максимальным в столбце, максимальный наоборот.
-			if (min < matr[k][minJ]) flagMin = false;
-			if (max > matr[k][maxJ]) flagMax = false;
-		}
-		// Если все хорошо выводим индексы седловых элементов.
-		if (flagMin) cout << "(" << minI << ", " << minJ << ") ";
-		if (flagMax) cout << "(" << maxI << ", " << maxJ << ") ";
 	}
 }
