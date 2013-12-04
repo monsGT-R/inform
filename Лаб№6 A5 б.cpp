@@ -6,7 +6,7 @@ void main()
 {
 	setlocale(LC_ALL, "Russian");
 	const int length = 5; // Размерность
-	int	matr[length][length];
+	int matr[length][length];
 	srand(unsigned(time(0)));
 
 	
